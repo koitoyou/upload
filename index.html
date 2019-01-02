@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>Upload Test</title>
+<link href="style.css" rel="stylesheet">
+<style type="text/css">
+<!--
+/* CSSを直接書くとき */
+.normal_waku {
+  /* border: medium dashed #000; */
+}
+.dropok_waku {
+  /* border: solid #000; */
+}
+#upload_area {
+  height: 200px;
+  width: 400px;
+  background-image: url("dragarea.png");
+  background-position: center center;
+}
+#upload_area .hover {
+  background-color: #330;
+}
+.cursor_nodrop {
+  cursor: no-drop;
+}
+.cursor_dropok {
+  cursor: auto;
+}
+-->
+</style>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+<!--
+$(function() {
+  var obj = $("#upload_area");
+  obj.on("dragenter", function(e) {
+    // ドラッグ枠にIN
+    console.log("dragenter");
+    e.stopPropagation();
+    e.preventDefault();
+    $(this).removeClass("normal_waku");
+    $(this).addClass("dropok_waku");
+  });
+  obj.on('dragover', function (e) {
+    // ドラッグ中
+    e.stopPropagation();  
+    e.preventDefault();
+    console.log("dragover"); 
+    $(this).removeClass("normal_waku");
+    $(this).addClass("dropok_waku");
+  });  
+  obj.on('dragleave', function (e) { 
+    // ドラッグ枠から離れる 
+    $(this).removeClass("dropok_waku");
+    $(this).addClass("normal_waku");
+    e.preventDefault();  
+  });
+  obj.on('drop', function (e) {  
+    // ドロップ完了
+    $(this).removeClass("dropok_waku");
+    $(this).addClass("normal_waku");
+    e.preventDefault();  
+    console.log("drop");
+    var files = e.originalEvent.dataTransfer.files;
+    $("#filelist").empty();
+    for ( var i = 0; i < files.length; i++ ) {
+      console.log("file: " + files[i].name);
+      $("#filelist").append("<li>" + files[i].name + "</li>");
+    }
+    //addWaitList(e.originalEvent.dataTransfer.files);  
+  });
+
+
+});
+
+//-->
+</script>
+</head>
+<body>
+<div id="all" >
+<h1>Upload Test</h1>
+<div id="upload_area" class="normal_waku"></div>
+<div>
+  <h3>List:</h3>
+  <ul id="filelist">
+    <li>file1</li>
+    <li>file2</li>
+  </ul>
+</div>
+</div>
+</body>
+</html>
